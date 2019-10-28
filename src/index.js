@@ -6,7 +6,7 @@ import './styles/style.scss';
 import { HashRouter } from 'react-router-dom';
 
 ReactDOM.render(
-	<HashRouter basename="/">
+	<HashRouter basename="">
 		<App />
 	</HashRouter>,
 	document.querySelector('#root')
