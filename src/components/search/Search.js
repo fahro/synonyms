@@ -18,7 +18,6 @@ class Search extends Component {
 		let results = this.props.find_synonyms(word);
 		this.setState({
 			currentWord: word,
-			searchKeyword: word,
 			results
 		});
 	};
