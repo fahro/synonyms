@@ -6,7 +6,7 @@ class Footer extends Component {
 		return (
 			<div className={'footer'}>
 				<Container>
-					<span className={'text-muted'}>Fahro| Powered by Reeinvent</span>
+					<span className={'text-muted'}>Fahro | Powered by Reeinvent</span>
 				</Container>
 			</div>
 		);
