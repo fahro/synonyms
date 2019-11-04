@@ -47,7 +47,10 @@ class Search extends Component {
 
 	_handleSearchWordSynonyms = (word = '') => {
 		this.loadingResults();
-		this.findWordSynonyms(word ? word : this.state.searchKeyword);
+		let searchWord = word ? word : this.state.searchKeyword;
+		if (searchWord) {
+			this.findWordSynonyms(searchWord);
+		}
 	};
 	_redirect = () => {
 		this.props.history.push('/browse/' + this.state.searchKeyword);

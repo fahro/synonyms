@@ -41,9 +41,9 @@ class Result extends Component {
 
 							<hr />
 							<Row>
-								{!!this.props.synonyms ? (
+								{this.props.synonyms ? (
 									this.props.synonyms.map((entry, index) => (
-										<Col xs="4" key={index}>
+										<Col md="4" key={index}>
 											<Entry
 												search={this.props.search}
 												data={entry}

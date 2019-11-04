@@ -3,61 +3,33 @@ import Layout from './layout/Layout';
 import Search from './search/Search';
 import NotFound from './NotFound';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import SynonymsDict from '../utilities/SynonymsDict';
 class App extends Component {
 	state = {
-		dictionary: new Map([
-			[ 'clean', new Set([ 'washed', 'blank', 'clear' ]) ],
-			[ 'washed', new Set([ 'clean' ]) ],
-			[ 'blank', new Set([ 'clean' ]) ],
-			[ 'clear', new Set([ 'clean' ]) ]
-		])
+		dictionary: new SynonymsDict()
 	};
-	_clean_word = (word) => {
+	static _clean_word = (word) => {
 		return word.trim().toLowerCase();
 	};
 
 	find_synonyms = (word) => {
-		word = this._clean_word(word);
-		return this.state.dictionary.get(word);
+		word = App._clean_word(word);
+		let words = this.state.dictionary.getAllSynonymWords(word);
+		console.log('riejci:', words);
+		return words;
 	};
 	add_synonym = (word1, word2) => {
-		word1 = this._clean_word(word1);
-		word2 = this._clean_word(word2);
+		word1 = App._clean_word(word1);
+		word2 = App._clean_word(word2);
 		let dict = this.state.dictionary;
-		let synonyms1 = dict.get(word1);
-		let synonyms2 = dict.get(word2);
-		if (synonyms1) {
-			synonyms1.add(word2);
-		} else {
-			dict.set(word1, new Set([ word2 ]));
-		}
-		if (synonyms2) {
-			synonyms2.add(word1);
-		} else {
-			dict.set(word2, new Set([ word1 ]));
-		}
+		dict.pairSynonyms(word1, word2);
 		this.setState({ dictionary: dict });
 	};
 	remove_synonym = (word1, word2) => {
-		word1 = this._clean_word(word1);
-		word2 = this._clean_word(word2);
+		word1 = App._clean_word(word1);
+		word2 = App._clean_word(word2);
 		let dict = this.state.dictionary;
-		let synonyms1 = dict.get(word1);
-		let synonyms2 = dict.get(word2);
-		console.log(synonyms1);
-		console.log(synonyms2);
-		if (synonyms1) {
-			synonyms1.delete(word2);
-			if (synonyms1.size === 0) {
-				dict.delete(word1);
-			}
-		}
-		if (synonyms2) {
-			synonyms2.delete(word1);
-			if (synonyms2.size === 0) {
-				dict.delete(word2);
-			}
-		}
+		dict.unpairSynonyms(word1, word2);
 		this.setState({ dictionary: dict });
 	};
 
