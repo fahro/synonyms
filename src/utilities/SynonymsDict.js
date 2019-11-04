@@ -28,15 +28,19 @@ export default class SynonymsDict {
 		if (firstWord === secondWord) return; //skip unpairing the same word
 
 		let words = this.graph.graphSearchDFS(firstWord);
-		words.delete(firstWord);
-		words.delete(secondWord);
+		if (words.has(firstWord)) {
+			words.delete(firstWord);
+		}
+		if (words.has(secondWord)) {
+			words.delete(secondWord);
+		}
 		//goal is to keep transitivity in unpairing words
 		//e.g if A <-> B <-> C (<-> synonym with each other)
 		// and if  A unpairs with B
 		// result should be A<->C   and B is alone
 		words.forEach((synonymWord) => {
 			this.graph.addEdge(firstWord, synonymWord); //adding all synonyms of second word to first word
-			this.graph.removeEdge(secondWord, synonymWord); // removing second word from connected nodes
+			this.graph.removeEdge(secondWord, synonymWord); // removing second word from its connected nodes
 		});
 		this.graph.removeEdge(firstWord, secondWord);
 	}
@@ -49,6 +53,6 @@ export default class SynonymsDict {
 	getAllSynonymWords(word) {
 		let words = this.graph.graphSearchDFS(word);
 		words.delete(word);
-		return words; //words is a Set type and Set doesn't support mapping
+		return [ ...words ];
 	}
 }

@@ -32,7 +32,6 @@ export default class UndirectedGraph {
 	 * Beacuse the graph is undirected it will also create the conneciton from destination to source.
 	 * @param {any} source
 	 * @param {any} destination
-	 * @returns {[GraphNode, GraphNode]} source/destination node pair
 	 */
 	addEdge(source, destination) {
 		if (source === '' || destination === '') return; //skip empty strings
@@ -52,16 +51,20 @@ export default class UndirectedGraph {
 	 * @param {any} destination
 	 */
 	removeEdge(source, destination) {
-		this.addVertex(source);
-		this.addVertex(destination);
-
-		this.nodes.get(source).delete(destination);
-		this.nodes.get(destination).delete(source);
+		let sourceNodes = this.nodes.get(source);
+		if (sourceNodes.has(destination)) {
+			sourceNodes.delete(destination);
+		}
+		let destinationNodes = this.nodes.get(destination);
+		if (destinationNodes.has(source)) {
+			destinationNodes.delete(source);
+		}
 	}
 
 	/**
 	 * Graph search using depth-first search algorithm to get all connected nodes
-	 * @param {GraphNode} first node to start 
+	 * @param {string} first node to start 
+	 * @returns {[string]} list of connected nodes to the first node
 	 */
 	graphSearchDFS(first) {
 		const visited = new Set();
@@ -70,7 +73,6 @@ export default class UndirectedGraph {
 		visitList.push(first);
 
 		while (visitList && visitList.length) {
-			console.log(visitList);
 			//while visitList is not empty
 			const node = visitList.pop();
 			if (node && !visited.has(node)) {
@@ -81,6 +83,7 @@ export default class UndirectedGraph {
 				}
 			}
 		}
-		return visited;
+
+		return visited; //return as array
 	}
 }
