@@ -53,7 +53,7 @@ class Search extends Component {
 		}
 	};
 	_redirect = () => {
-		this.props.history.push('/browse/' + this.state.searchKeyword);
+		if (!!this.state.searchKeyword) this.props.history.push('/browse/' + this.state.searchKeyword);
 	};
 	_renderResults = () => {
 		if (this.state.results === false) {
