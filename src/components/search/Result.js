@@ -21,7 +21,8 @@ class Result extends Component {
 							<div className={'keyword-text'}>{keyword}</div>
 							<InputGroup>
 								<Input
-									placeholder={'Type new synonym for ' + keyword}
+									className="synonym-input"
+									placeholder={'Type new synonym for ' + keyword.toLowerCase()}
 									onKeyPress={this._handleKeyPress}
 									onChange={(e) => {
 										this.setState({ synonymWord: e.target.value });
@@ -40,9 +41,9 @@ class Result extends Component {
 							</InputGroup>
 
 							<hr />
-							<Row>
-								{this.props.synonyms ? (
-									this.props.synonyms.map((entry, index) => (
+							{this.props.synonyms && this.props.synonyms.length > 0 ? (
+								<Row>
+									{this.props.synonyms.map((entry, index) => (
 										<Col md="4" key={index}>
 											<Entry
 												search={this.props.search}
@@ -50,13 +51,15 @@ class Result extends Component {
 												remove={this.props.remove.bind(null, keyword)}
 											/>
 										</Col>
-									))
-								) : (
-									<ResultMessage
-										message={'Sorry but there is no synonym found for the word: ' + keyword}
-									/>
-								)}
-							</Row>
+									))}
+								</Row>
+							) : (
+								<ResultMessage
+									message={
+										'Sorry but there is no synonym found for the word: ' + keyword.toLowerCase()
+									}
+								/>
+							)}
 						</CardBody>
 					</Card>
 				</Col>

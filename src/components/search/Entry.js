@@ -11,6 +11,7 @@ class Entry extends Component {
 					<CardBody>
 						<CardTitle>
 							<Button
+								className="synonym-delete"
 								close
 								onClick={() => {
 									this.props.remove(word);
