@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles/style.scss';
-import { HashRouter } from 'react-router-dom';
+import './styles/style.css';
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
-	<HashRouter basename="">
+	<BrowserRouter basename="">
 		<App />
-	</HashRouter>,
+	</BrowserRouter>,
 	document.querySelector('#root')
 );

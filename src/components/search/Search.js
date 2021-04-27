@@ -6,11 +6,10 @@ import Result from './Result';
 class Search extends Component {
 	constructor(props) {
 		super(props);
-		let keyword = props.match.params.keyword;
-		if (keyword === undefined) keyword = '';
+
 		this.state = {
-			currentWord: keyword,
-			searchKeyword: keyword,
+			currentWord: props.match.params.keyword,
+			searchKeyword: props.match.params.keyword,
 			dictionary: this.props.dictionary,
 			results: null
 		};
@@ -22,7 +21,9 @@ class Search extends Component {
 			results
 		});
 	};
-
+	updateSearchKeyword = (value) => {
+		this.setState({ searchKeyword: value });
+	};
 	loadingResults = () => {
 		this.setState({ results: false });
 	};
@@ -41,7 +42,7 @@ class Search extends Component {
 	}
 
 	_onSearchKeywordUpdate = (e) => {
-		this.setState({ searchKeyword: e.target.value });
+		this.updateSearchKeyword(e.target.value);
 	};
 
 	_handleSearchWordSynonyms = (word = '') => {
